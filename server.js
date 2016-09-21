@@ -7,6 +7,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 var port = process.env.PORT || 8085;        // set port for server
+var router = express.Router();   //How we route the urls
 
 router.get('/', function(req, res) {
     res.json({ message: 'hooray! welcome to our api!' });
