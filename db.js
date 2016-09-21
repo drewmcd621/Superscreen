@@ -1,6 +1,6 @@
 //Setup some requires
 var fs          = require('fs');
-
+var Sequelize   = require('sequelize');
 //Grab our secrets from a JSON file
 var secret = JSON.parse(fs.readFileSync('secret.json', 'utf8'));
 
