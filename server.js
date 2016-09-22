@@ -29,7 +29,7 @@ router.get('/register', function(req, res) {
 
     try
     {
-        data.sync().then(function() {
+        datab.sync().then(function() {
           Screen.create({
             x: x,
             y: y,
