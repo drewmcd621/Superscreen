@@ -35,14 +35,20 @@ router.get('/register', function(req, res) {
             y: y,
             callback: callback
           }).then(function (scr){
-            console.log(scr);
-          })
-          res.json({ x: x, y: y, callback: callback });
+            res.json({success: 1, id: scr.id});
+          }).catch(function (err)
+          {
+            res.json({success:0, error: err.message});
+          });
+
+        }).catch(function (err)
+        {
+          res.json({success:0, error: err.message});
         });
     }
     catch(err)
     {
-      res.json({error: err.message});
+      res.json({success:0, error: err.message});
     }
 
 });
@@ -51,72 +57,72 @@ router.get('/register', function(req, res) {
 router.get('/transmit', function(req, res) {
     var screenID = req.query.screen;
 
-    var curScr = Screen.findAll({
-      where: {
-        id: screenID
+    Screen.findById(screenID).then(function(scr){
+      var to = req.query.to; // U(p), D(own), L(eft), R(ight)
+
+      var left = req.query.left; // distance from left of the screen / total screen width
+      var top = req.query.top; // distance from top of the screen / total screen height
+
+      var xspeed = req.query.xspeed;  //Speed in X direction (% of horizontal screen / s^2)
+      var yspeed = req.query.yspeed;  //Speed in Y direction (% of vertical screen / s^2)
+
+      var xaccel = req.query.xaccel;  //Acceleration in the X direction (% of horizontal screen / s^2)
+      var yaccel = req.query.yaccel;  //Acceleration in the Y direction (% of vertical screen / s^2)
+
+
+      var data = req.query.data //JSON structured data to be passed between screens with the item, can be anything really
+
+      var sender;
+      var dx = 0;
+      var dy = 0;
+
+      //TODO: Validate inputs
+      if(to == "U")
+      {
+        top = 0;
+        sender = "D";
+        dy = -1;
       }
-    });
-
-    console.log(curScr);
-    //TODO: Possibly get x/y from screen ID or hash rather than relying on screen for accurate info
-
-    var to = req.query.to; // U(p), D(own), L(eft), R(ight)
-
-    var left = req.query.left; // distance from left of the screen / total screen width
-    var top = req.query.top; // distance from top of the screen / total screen height
-
-    var xspeed = req.query.xspeed;  //Speed in X direction (% of horizontal screen / s^2)
-    var yspeed = req.query.yspeed;  //Speed in Y direction (% of vertical screen / s^2)
-
-    var xaccel = req.query.xaccel;  //Acceleration in the X direction (% of horizontal screen / s^2)
-    var yaccel = req.query.yaccel;  //Acceleration in the Y direction (% of vertical screen / s^2)
-
-
-    var data = req.query.data //JSON structured data to be passed between screens with the item, can be anything really
-
-    var sender;
-    var dx = 0;
-    var dy = 0;
-
-    //TODO: Validate inputs
-    if(to == "U")
-    {
-      top = 0;
-      sender = "D";
-      dy = -1;
-    }
-    else if(to == "D")
-    {
-      top = 1;
-      sender = "U";
-      dy = 1;
-    }
-    else if (to == "L")
-    {
-      left = 0;
-      sender = "R";
-      dx = -1;
-    }
-    else if(to == "R")
-    {
-      left = 1;
-      sender = "L";
-      dx = 1;
-    }
-    else {
-      res.json({ success: 0, error: '"to" must be in (U, D, L, R)' });
-    }
-
-    //TODO: Determine if left/top should decide which screen to go to
-
-    var newScr = Screen.findAll({
-      where: {
-        x: xscreen + dx,
-        y: yscreen + dy
+      else if(to == "D")
+      {
+        top = 1;
+        sender = "U";
+        dy = 1;
       }
-    });
+      else if (to == "L")
+      {
+        left = 0;
+        sender = "R";
+        dx = -1;
+      }
+      else if(to == "R")
+      {
+        left = 1;
+        sender = "L";
+        dx = 1;
+      }
+      else {
+        res.json({ success: 0, error: '"to" must be in (U, D, L, R)' });
+      }
 
-    console.log(newScr);
+      //TODO: Determine if left/top should decide which screen to go to
+
+      Screen.findAll({
+        where: {
+          x: xscreen + dx,
+          y: yscreen + dy
+        }
+      }).then(function(scr){
+        console.log(scr);
+      }).catch(function (err)
+      {
+        res.json({success:0, error: err.message});
+        //TODO: handle a "not found" error
+      });
+    }).catch(function (err)
+    {
+      res.json({success:0, error: err.message});
+    });
 
 
 
