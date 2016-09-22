@@ -107,7 +107,7 @@ router.get('/transmit', function(req, res) {
 
       //TODO: Determine if left/top should decide which screen to go to
       var nX = scr.x + dx;
-      vay nY = scr.y + dy;
+      var nY = scr.y + dy;
       Screen.findAll({
         where: {
           x: nX,
