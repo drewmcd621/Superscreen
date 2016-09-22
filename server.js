@@ -129,12 +129,12 @@ router.get('/transmit', function(req, res) {
             console.error(err);
             res.json({success:0, error: "Error when transmitting", detail: err});
           }
-          if(response.statusCode == 200)
+          if(resp.statusCode == 200)
           {
             res.json({success:1, sent:1, newScreen: newScr[0].id, response: body}); //Everything went well
           }
           else {
-            res.json({success:0, error: "Error when transmitting", code: response.statusCode});
+            res.json({success:0, error: "Error when transmitting", code: resp.statusCode});
           }
         });
 
