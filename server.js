@@ -13,7 +13,6 @@ var port = process.env.PORT || 8085;        // set port for server
 var router = express.Router();   //How we route the urls
 
 var data = db.connect();
-var
 
 router.get('/', function(req, res) {
     res.json({ message: 'Welcome to the screen supervisor' });
