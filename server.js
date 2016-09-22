@@ -39,7 +39,7 @@ router.get('/register', function(req, res) {
     }
     catch(err)
     {
-      res.json(error: err.message);
+      res.json({error: err.message});
     }
 
 });
