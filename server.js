@@ -106,16 +106,24 @@ router.get('/transmit', function(req, res) {
       }
 
       //TODO: Determine if left/top should decide which screen to go to
-
+      var nX = scr.x + dx;
+      vay nY = scr.y + dy;
       Screen.findAll({
         where: {
-          x: scr.x + dx,
-          y: scr.y + dy
+          x: nX,
+          y: nY
         }
       }).then(function(newScr){
-        //Found, a screen let's send it
 
-        res.json({success:1, sent:1, newScreen: newScr[0].id});
+        if(newScr.length >= 1)
+        {
+          //Found, a screen let's send it
+          res.json({success:1, sent:1, newScreen: newScr[0].id});
+        }
+        else
+        {
+          res.json({success:1, sent:0, message:"No screen at ( " + nX + " , " + nY + " )" });
+        }
 
 
       }).catch(function (err)
