@@ -113,7 +113,11 @@ router.get('/transmit', function(req, res) {
           y: scr.y + dy
         }
       }).then(function(scr){
-        console.log(scr);
+        //Found, a screen let's send it
+
+        res.json({success:1, sent:1, newScreen: scr.id});
+
+
       }).catch(function (err)
       {
         res.json({success:0, error: err.message});
