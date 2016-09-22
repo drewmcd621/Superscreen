@@ -112,10 +112,10 @@ router.get('/transmit', function(req, res) {
           x: scr.x + dx,
           y: scr.y + dy
         }
-      }).then(function(scr){
+      }).then(function(newScr){
         //Found, a screen let's send it
 
-        res.json({success:1, sent:1, newScreen: scr.id});
+        res.json({success:1, sent:1, newScreen: newScr[0].id});
 
 
       }).catch(function (err)
