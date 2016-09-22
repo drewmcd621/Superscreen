@@ -109,8 +109,8 @@ router.get('/transmit', function(req, res) {
 
       Screen.findAll({
         where: {
-          x: xscreen + dx,
-          y: yscreen + dy
+          x: scr.x + dx,
+          y: scr.y + dy
         }
       }).then(function(scr){
         console.log(scr);
