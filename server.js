@@ -123,8 +123,10 @@ router.get('/transmit', function(req, res) {
         var request = require('request');
         var url = newScr[0].callback;
         //Send to the callback URL of the new screen
-        request({url: url, qs: params}, function(err, resp, body) {
+        request({url: url, qs: params}, function(err, resp, body)
+        {
           if(err) {
+            console.error(err);
             res.json({success:0, error: "Error when transmitting", detail: err});
           }
           if(response.statusCode == 200)
