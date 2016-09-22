@@ -34,7 +34,9 @@ router.get('/register', function(req, res) {
             x: x,
             y: y,
             callback: callback
-          });
+          }).then(function (scr){
+            console.log(scr);
+          })
           res.json({ x: x, y: y, callback: callback });
         });
     }
@@ -47,9 +49,15 @@ router.get('/register', function(req, res) {
 
 //Send an object
 router.get('/transmit', function(req, res) {
-    var xscreen = req.query.xscreen;
-    var yscreen = req.query.yscreen;
+    var screenID = req.query.screen;
 
+    var curScr = Screen.findAll({
+      where: {
+        id: screenID
+      }
+    });
+
+    console.log(curScr);
     //TODO: Possibly get x/y from screen ID or hash rather than relying on screen for accurate info
 
     var to = req.query.to; // U(p), D(own), L(eft), R(ight)
@@ -57,15 +65,20 @@ router.get('/transmit', function(req, res) {
     var left = req.query.left; // distance from left of the screen / total screen width
     var top = req.query.top; // distance from top of the screen / total screen height
 
-    var speed = req.query.speed;  //Velocity of the item (a standard measure should be determined across screens for speed and velocity)
-    var accel = req.query.accel;  //Acceleration of the item
-    var dir = req.query.dir;  //Direction in radians of the item (0 or 2pi at top)
+    var xspeed = req.query.xspeed;  //Speed in X direction (% of horizontal screen / s^2)
+    var yspeed = req.query.yspeed;  //Speed in Y direction (% of vertical screen / s^2)
+
+    var xaccel = req.query.xaccel;  //Acceleration in the X direction (% of horizontal screen / s^2)
+    var yaccel = req.query.yaccel;  //Acceleration in the Y direction (% of vertical screen / s^2)
+
 
     var data = req.query.data //JSON structured data to be passed between screens with the item, can be anything really
 
     var sender;
     var dx = 0;
     var dy = 0;
+
+    //TODO: Validate inputs
     if(to == "U")
     {
       top = 0;
