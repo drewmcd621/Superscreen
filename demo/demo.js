@@ -1,20 +1,16 @@
 //Setup server
 var express     = require('express');
 var app         = express();
-var ioserver    = express();
 var path = require('path');
 
 var port = process.env.PORT || 8086;        // set port for server
 
 
 //Setup socket
-var ioport = 8087;
-var http = require('http').createServer(ioserver);
-var io = require('socket.io').listen(http);
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
-http.listen(ioport, function() {
-  console.log("Socket server up on " + ioport);
-})
+
 
 //Setup demo
 var request = require('request');
@@ -59,9 +55,6 @@ app.get('/display', function (req, res)
   res.sendFile(path.join(__dirname + '/screens/simple.html'));
 });
 
-app.listen(port, function(){
-  console.log('Server up on port ' + port);
-});
 
 /** Sockets **/
 io.on('connection', function(socket){
@@ -70,4 +63,10 @@ io.on('connection', function(socket){
   socket.on('handshake', function(msg){
     console.log(msg);
   })
+});
+
+
+/** Ears on **/
+http.listen(port, function() {
+  console.log("Server up on " + port);
 });
