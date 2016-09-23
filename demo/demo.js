@@ -14,20 +14,20 @@ var apiDomain = "www.flyingkiwibird.com:8085";
 var domain = "www.flyingkiwibird.com:8086";
 
 //Setup
-request("http://" + apiDomain + "/api/start", function(err, resp, body) {
+request("http://" + apiDomain + "/api/setup", function(err, resp, body) {
   console.log(body);
 });
 //Register screens
-request({url: "http://" + domain + "/api/register", qs:{name:"screen1", x:0, y:0, callback:"http://" + domain + "/receive/screen1"}}, function(err, resp, body) {
+request({url: "http://" + apiDomain + "/api/register", qs:{name:"screen1", x:0, y:0, callback:"http://" + domain + "/receive/screen1"}}, function(err, resp, body) {
   console.log(body);
 });
-request({url: "http://" + domain + "/api/register", qs:{name:"screen2", x:1, y:0, callback:"http://" + domain + "/receive/screen2"}}, function(err, resp, body) {
+request({url: "http://" + apiDomain + "/api/register", qs:{name:"screen2", x:1, y:0, callback:"http://" + domain + "/receive/screen2"}}, function(err, resp, body) {
   console.log(body);
 });
-request({url: "http://" + domain + "/api/register", qs:{name:"screen3", x:0, y:1, callback:"http://" + domain + "/receive/screen3"}}, function(err, resp, body) {
+request({url: "http://" + apiDomain + "/api/register", qs:{name:"screen3", x:0, y:1, callback:"http://" + domain + "/receive/screen3"}}, function(err, resp, body) {
   console.log(body);
 });
-request({url: "http://" + domain + "/api/register", qs:{name:"screen4", x:1, y:1, callback:"http://" + domain + "/receive/screen4"}}, function(err, resp, body) {
+request({url: "http://" + apiDomain + "/api/register", qs:{name:"screen4", x:1, y:1, callback:"http://" + domain + "/receive/screen4"}}, function(err, resp, body) {
   console.log(body);
 });
 
