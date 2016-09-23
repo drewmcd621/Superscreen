@@ -11,12 +11,14 @@ var router = express.Router();   //How we route the urls
 
 var datab = db.connect();
 
-datab.sync().then(function(){
-  console.info("DB ready!");
-})
+
 
 /********** Load models ****/
 var Screen = Scr(datab);
+
+datab.sync().then(function(){
+  console.info("DB ready!");
+})
 
 router.get('/', function(req, res) {
   res.json({ message: 'Welcome to the screen supervisor' });
