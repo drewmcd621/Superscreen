@@ -2,6 +2,7 @@
 var express     = require('express');
 var app         = express();
 var ioserver    = express();
+var path = require('path');
 
 var port = process.env.PORT || 8086;        // set port for server
 
