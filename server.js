@@ -161,7 +161,7 @@ router.get('/transmit', function(req, res) {
 
 //Echo to display callback code
 router.get('/echo', function(req, res) {
-  res.json(req.query);
+  res.json({success: 1, data: req.query.data});
 });
 
 app.use('/api', router);
