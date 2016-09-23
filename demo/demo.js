@@ -8,13 +8,12 @@ var port = process.env.PORT || 8086;        // set port for server
 
 
 //Setup socket
-var ioport = 8087;
 
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var http = require('http').createServer(app);
+var io = require('socket.io').listen(http);
 
-ioserver.listen(ioport, function() {
-  console.log("Socket server up on " + ioport);
+http.listen(port, function() {
+  console.log("Socket server up on " + port);
 })
 
 //Setup demo
