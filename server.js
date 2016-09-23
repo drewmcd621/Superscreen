@@ -16,7 +16,7 @@ var datab = db.connect();
 /********** Load models ****/
 var Screen = Scr(datab);
 
-datab.sync().then(function(){
+datab.sync({force: true}).then(function(){
   console.info("DB ready!");
 })
 
