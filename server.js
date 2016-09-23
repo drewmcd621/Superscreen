@@ -171,9 +171,6 @@ router.get('/echo', function(req, res) {
 
 app.use('/api', router);
 
-app.listen(port).then(function(){
+app.listen(port, function(){
   console.log('Server up on port ' + port);
-}).catch(function(err)
-{
-  console.error(err);
 });
