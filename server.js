@@ -11,7 +11,9 @@ var router = express.Router();   //How we route the urls
 
 var datab = db.connect();
 
-datab.sync();
+datab.sync().then(function(){
+  console.info("DB ready!");
+})
 
 /********** Load models ****/
 var Screen = Scr(datab);
