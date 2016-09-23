@@ -1,18 +1,17 @@
 //Setup some requires
 var express     = require('express');
 var app         = express();
-var bodyParser  = require('body-parser');
+
 var db          = require('./db.js');
 var Scr      = require("./app/models/screen.js");
 
-// configure app to use bodyParser
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
 
 var port = process.env.PORT || 8085;        // set port for server
 var router = express.Router();   //How we route the urls
 
 var datab = db.connect();
+
+datab.sync();
 
 /********** Load models ****/
 var Screen = Scr(datab);
@@ -21,43 +20,49 @@ router.get('/', function(req, res) {
   res.json({ message: 'Welcome to the screen supervisor' });
 });
 
+//Setup a new sysyem (clear the database)
+router.get('/setup', function(req, res) {
+
+  Screen.truncate().then(function (scr){
+    res.json({success: 1});
+  }).catch(function (err)
+  {
+    res.json({success:0, error: err.message});
+  });
+
+});
+
 //Register a screen
 router.get('/register', function(req, res) {
+  var name = req.query.name;
   var x = req.query.x;
   var y = req.query.y;
   var callback = req.query.callback;
 
-  try
-  {
-    datab.sync().then(function() {
-      Screen.create({
-        x: x,
-        y: y,
-        callback: callback
-      }).then(function (scr){
-        res.json({success: 1, id: scr.id});
-      }).catch(function (err)
-      {
-        res.json({success:0, error: err.message});
-      });
 
-    }).catch(function (err)
-    {
-      res.json({success:0, error: err.message});
-    });
-  }
-  catch(err)
+  Screen.create({
+    name: name,
+    x: x,
+    y: y,
+    callback: callback
+  }).then(function (scr){
+    res.json({success: 1, id: scr.id});
+  }).catch(function (err)
   {
     res.json({success:0, error: err.message});
-  }
+  });
 
 });
 
 //Send an object
 router.get('/transmit', function(req, res) {
-  var screenID = req.query.screen;
+  var screenName = req.query.name;
 
-  Screen.findById(screenID).then(function(scr){
+  Screen..findOne({
+    where: {
+      name: screenName
+    }
+  }).then(function(scr){
     var to = req.query.to; // U(p), D(own), L(eft), R(ight)
 
     var params = {};
@@ -110,18 +115,18 @@ router.get('/transmit', function(req, res) {
     //TODO: Determine if left/top should decide which screen to go to
     var nX = scr.x + dx;
     var nY = scr.y + dy;
-    Screen.findAll({
+    Screen.findOne({
       where: {
         x: nX,
         y: nY
       }
     }).then(function(newScr){
 
-      if(newScr.length >= 1)
+      if(newScr)
       {
         //Found, a screen let's send it
         var request = require('request');
-        var url = newScr[0].callback;
+        var url = newScr.callback;
         //Send to the callback URL of the new screen
         request({url: url, qs: params}, function(err, resp, body)
         {

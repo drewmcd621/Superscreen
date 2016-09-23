@@ -7,11 +7,10 @@ var Sequelize   = require('sequelize');
 module.exports = function(db)
 {
    var Screen = db.define('screen',{
-    // id: {type: Sequelize.INTEGER.UNSIGNED, primaryKey: true },
-     x: Sequelize.INTEGER,
-     y: Sequelize.INTEGER,
-     callback: {type:Sequelize.STRING, validate:{isUrl:true}},
-
+     name: {type:Sequelize.STRING, unique: 'name', allowNull: false},
+     x: {type: Sequelize.INTEGER, unique: 'xy', allowNull: false},
+     y: {type: Sequelize.INTEGER, unique: 'xy', allowNull: false},
+     callback: {type:Sequelize.STRING, validate:{isUrl:true}}
    });
 
    return Screen;

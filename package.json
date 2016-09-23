@@ -2,7 +2,6 @@
   "name": "superscreen",
   "main": "server.js",
   "dependencies": {
-    "body-parser": "~1.0.1",
     "express": "~4.0.0",
     "mysql": "^2.11.1",
     "request": "^2.75.0",
