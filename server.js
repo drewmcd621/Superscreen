@@ -72,7 +72,7 @@ router.get('/transmit', function(req, res) {
     params['yaccel'] = req.query.yaccel;  //Acceleration in the Y direction (% of vertical screen / s^2)
 
 
-    var data = req.query.data //JSON structured data to be passed between screens with the item, can be anything really
+    params['info'] = req.query.info //JSON structured data to be passed between screens with the item, can be anything really
 
     var sender;
     var dx = 0;
@@ -161,7 +161,7 @@ router.get('/transmit', function(req, res) {
 
 //Echo to display callback code
 router.get('/echo', function(req, res) {
-  res.json({success: 1, data: req.query.data});
+  res.json({success: 1, data: req.query.info});
 });
 
 app.use('/api', router);
