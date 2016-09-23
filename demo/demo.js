@@ -10,7 +10,7 @@ var port = process.env.PORT || 8086;        // set port for server
 //Setup socket
 var ioport = 8087;
 
-var http = require('http').Server(ioserver);
+var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 ioserver.listen(ioport, function() {

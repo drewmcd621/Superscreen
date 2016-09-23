@@ -7,8 +7,8 @@
   $(document).ready(function(){
     var r_name = /\?name=([^&]+)/;
     var match = r_name.exec(window.location.href);
-    console.log(match);
-    socket.emit('handshake', 'hello');
+
+    socket.emit('handshake', "hello I'm " + match[1]);
   });
 
 
