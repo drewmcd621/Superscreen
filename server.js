@@ -58,7 +58,7 @@ router.get('/register', function(req, res) {
 router.get('/transmit', function(req, res) {
   var screenName = req.query.name;
 
-  Screen..findOne({
+  Screen.findOne({
     where: {
       name: screenName
     }
