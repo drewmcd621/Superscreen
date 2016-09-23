@@ -1,0 +1,8 @@
+{
+  "name": "superscreen-demo",
+  "main": "server.js",
+  "dependencies": {
+    "express": "~4.0.0",
+    "request": "^2.75.0",
+  }
+}
