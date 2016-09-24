@@ -17,7 +17,7 @@
   </style>
   <script>
     $(document).ready(function(){
-      var r_uuid = /\?uuid=([^&]+)/;
+      var r_uuid = /uuid=([^&]+)/;
       var match = r_uuid.exec(window.location.href);
       var uuid = match[1];
       $("iframe").each(function(){
