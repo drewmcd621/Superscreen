@@ -55,8 +55,18 @@
 
     var balls = [];
 
-    balls.push(new Ball(svg, 15, 20, 0.05, 0.1));
-    balls.push(new Ball(svg, 42, 17, 0.05, 0.1));
+    function scaleX(p)
+    {
+      return p * w;
+    }
+
+    function scaleY(p)
+    {
+      return p * h;
+    }
+
+    balls.push(new Ball(svg, scaleX(Math.random()), scaleY(Math.random()), Math.random()*3, Math.random()*3));
+    balls.push(new Ball(svg, scaleX(Math.random()), scaleY(Math.random()), Math.random()*3, Math.random()*3));
 
     d3.timer(function () {
       for (var i = 0; i < balls.length; ++i) {
