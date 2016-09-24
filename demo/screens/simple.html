@@ -110,8 +110,8 @@ $(document).ready(function(){
     return p * h;
   }
 
-  for (var i = 0; i < 4; i++) {
-    balls.push(new Ball(svg, scaleX(Math.random()), scaleY(Math.random()), Math.random()*6 - 3, Math.random()*6 - 3, "red"));
+  for (var i = 0; i < 1; i++) {
+    balls.push(new Ball(svg, scaleX(Math.random()), scaleY(Math.random()), 1, 2, "red"));
   }
 
   socket.on("newObj", function(data){
@@ -144,6 +144,8 @@ $(document).ready(function(){
         data["top"] = thisBall.y / h;
         data["xspeed"] = thisBall.dX / w;
         data["yspeed"] = thisBall.dY / h;
+
+        console.log(data);
 
         $.getJSON(url, data).done(function(data){
           console.log(data);
