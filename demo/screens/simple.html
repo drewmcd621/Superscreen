@@ -62,29 +62,26 @@
       this.checkWall = function()
       {
         var bb = ballObj.svg.node().getBBox();
+        console.log(bb);
         var hsvg = bb.height;
         var wsvg = bb.width;
 
         if(ballObj.y - ballObj.rad <= 0)
         {
           ballObj.dY *= -1;
-          console.log("Bounce!");
         }
         if(ballObj.y + ballObj.rad >= hsvg)
         {
           ballObj.dY *= -1;
-          console.log("Bounce!");
         }
 
         if(ballObj.x - ballObj.rad <= 0)
         {
           ballObj.dX *= -1;
-          console.log("Bounce!");
         }
         if(ballObj.x + ballObj.rad >= wsvg)
         {
           ballObj.dX *= -1;
-          console.log("Bounce!");
         }
 
 
