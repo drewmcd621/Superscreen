@@ -4,6 +4,7 @@ var app         = express();
 var path = require('path');
 var uuid = require('uuid');
 var cookieParser = require('cookie-parser');
+var session = require('express-session')
 
 var port = process.env.PORT || 8086;        // set port for server
 
@@ -41,6 +42,7 @@ request("http://" + apiDomain + "/api/setup", function(err, resp, body) {
 });
 
 app.use(cookieParser());
+app.use(session());
 
 app.get('/', function (req, res) {
   if(req.query.uuid)
