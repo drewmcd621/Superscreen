@@ -65,19 +65,23 @@
         if(ballObj.y - ballObj.rad <= 0)
         {
           ballObj.dY *= -1;
+          console.log("Bounce!");
         }
         else if(ballObj.y + ballObj.rad >= ballObj.svg.style("height"))
         {
           ballObj.dY *= -1;
+          console.log("Bounce!");
         }
 
         if(ballObj.x - ballObj.rad <= 0)
         {
           ballObj.dX *= -1;
+          console.log("Bounce!");
         }
         else if(ballObj.x + ballObj.rad >= ballObj.svg.style("width"))
         {
           ballObj.dX *= -1;
+          console.log("Bounce!");
         }
 
 
@@ -96,8 +100,8 @@
       return p * h;
     }
 
-    balls.push(new Ball(svg, scaleX(Math.random()), scaleY(Math.random()), Math.random()*3, Math.random()*3));
-    balls.push(new Ball(svg, scaleX(Math.random()), scaleY(Math.random()), Math.random()*3, Math.random()*3));
+    balls.push(new Ball(svg, scaleX(Math.random()), scaleY(Math.random()), Math.random()*6 - 3, Math.random()*6 - 3));
+    balls.push(new Ball(svg, scaleX(Math.random()), scaleY(Math.random()), Math.random()*6 - 3, Math.random()*6 - 3));
 
     d3.timer(function () {
       for (var i = 0; i < balls.length; ++i) {
