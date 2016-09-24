@@ -140,7 +140,7 @@ $(document).ready(function(){
   }
 
   for (var i = 0; i < 1; i++) {
-    balls.push(new Ball(svg, scaleX(Math.random()), scaleY(Math.random()), 3*Math.random()-1.5, 3*Math.random()-1.5, "red"));
+    balls.push(new Ball(svg, scaleX(Math.random()), scaleY(Math.random()), Math.random()-0.5, Math.random()-0.5, "red"));
   }
 
   socket.on("newObj", function(data){
