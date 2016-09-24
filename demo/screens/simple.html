@@ -36,7 +36,7 @@
       this.y = posY;
       this.svg = canvass;
       var ballObj = this;
-      var R = 2;
+      var R = 5;
 
       this.ball = canvass.append('circle')
                          .attr("r", R)
@@ -55,8 +55,8 @@
 
     var balls = [];
 
-    balls.push(new Ball(svg, 15, 20, 0.01, 0.02));
-    balls.push(new Ball(svg, 42, 17, 0.02, 0.01));
+    balls.push(new Ball(svg, 15, 20, 0.05, 0.1));
+    balls.push(new Ball(svg, 42, 17, 0.05, 0.1));
 
     d3.timer(function () {
       for (var i = 0; i < balls.length; ++i) {
