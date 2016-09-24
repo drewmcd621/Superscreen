@@ -134,7 +134,6 @@ $(document).ready(function(){
   socket.on("newObj", function(data){
     if(name == data.name)
     {
-      console.log(data);
       var l = balls.push(new Ball(svg, scaleX(data.object.left), scaleX(data.object.top),scaleX(data.object.xspeed), scaleY(data.object.yspeed), "blue"));
       balls[l-1].move(); //Move the ball a step on load
     }
@@ -164,7 +163,7 @@ $(document).ready(function(){
 
         thisBall.bounce(wall);
 
-        console.log(data);
+
 
         $.getJSON(url, data).done(function(data){
           console.log(data);
@@ -179,7 +178,7 @@ $(document).ready(function(){
         }).always(function(){
           if(thisBall)
           {
-            console.log("Reanimate!");
+
             thisBall.hold = false;
 
           }
