@@ -39,14 +39,16 @@
       var R = 2;
 
       this.ball = canvass.append('circle')
-                .attr({r: R,
-                      cx: ballObj.x, cy: ballObj.y})
-                .style("fill","red");
+                         .attr("r", R)
+                         .attr("cx", ballObj.x)
+                         .attr("cy", ballObj.y)
+                         .style("fill","red");
       this.move = function(){
         ballObj.x += ballObj.dX;
         ballObj.y += ballObj.dY;
 
-        ballObj.ball.attr({cx: ballObj.x, cy: ballObj.y});
+        ballObj.ball.attr("cx", ballObj.x)
+                    .attr("cy", ballObj.y);
 
       }
     }
