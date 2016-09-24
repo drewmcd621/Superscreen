@@ -96,6 +96,7 @@ $(document).ready(function(){
       {
         if(dir)
         {
+          ballObj.bounce(dir); //Make sure it it going in the right direction even if immune
           return null;
         }
         else {
@@ -168,10 +169,12 @@ $(document).ready(function(){
       var wall = balls[i].checkWall();
       if(wall)
       {
-        balls[i].hold = true; //Hold the ball in place
 
         var thisBall = balls[i];
         var idx = i;
+
+        thisBall.hold = true;
+        thisBall.ball.attr("held", "true");
 
         var url = "http://flyingkiwibird.com:8085/api/transmit";
         var data = {};
@@ -201,6 +204,7 @@ $(document).ready(function(){
           {
 
             thisBall.hold = false;
+            thisBall.ball.attr("held", "false");
 
           }
         });
