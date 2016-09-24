@@ -51,7 +51,9 @@ $(document).ready(function(){
       ballObj.y += ballObj.dY;
 
       ballObj.ball.attr("cx", ballObj.x)
-      .attr("cy", ballObj.y);
+      .attr("cy", ballObj.y)
+      .attr("velX", ballObj.dX)
+      .attr("velY", ballObj.dY);
     }
 
     this.checkWall = function()
@@ -137,7 +139,7 @@ $(document).ready(function(){
     return p * h;
   }
 
-  for (var i = 0; i < 5; i++) {
+  for (var i = 0; i < 1; i++) {
     balls.push(new Ball(svg, scaleX(Math.random()), scaleY(Math.random()), 3*Math.random()-1.5, 3*Math.random()-1.5, "red"));
   }
 
