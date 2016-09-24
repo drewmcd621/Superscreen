@@ -18,7 +18,13 @@ var Screen = Scr(datab);
 
 datab.sync({force: true}).then(function(){
   console.info("DB ready!");
-})
+});
+
+router.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 router.get('/', function(req, res) {
   res.json({ message: 'Welcome to the screen supervisor' });
@@ -172,6 +178,8 @@ router.get('/transmit', function(req, res) {
 router.get('/echo', function(req, res) {
   res.json({success: 1, info: req.query.info});
 });
+
+
 
 app.use('/api', router);
 
