@@ -8,11 +8,15 @@
     var r_name = /\?name=([^&]+)/;
     var match = r_name.exec(window.location.href);
 
-    socket.emit('handshake', "hello I'm " + match[1]);
+    var name = match[1];
+    socket.emit('handshake', "hello I'm " + name);
 
     socket.on("newObj", function(data){
+      if(name == data.name)
+      {
         alert("Got one!");
         console.log(data);
+      }
     });
   });
 

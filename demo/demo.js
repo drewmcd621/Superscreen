@@ -46,7 +46,7 @@ app.get('/', function (req, res) {
 //Handles the transmit messages and sends them via socket.io
 app.get('/receive/:name', function (req, res)
 {
-  io.emit('newObj', {name: req.params.name, object:req.query});
+  io.emit('newObj', {name: req.params.name, object: req.query});
 });
 
 app.get('/display', function (req, res)
