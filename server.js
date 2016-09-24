@@ -93,28 +93,27 @@ router.get('/transmit', function(req, res) {
     var dx = 0;
     var dy = 0;
 
+    var superX =  params['left'] + scr.x;
+    var superY = params['top'] + scr.y;
+
     //TODO: Validate inputs
     if(to == "U")
     {
-      params['top'] = 1 - params['top'];
       sender = "D";
       dy = -1;
     }
     else if(to == "D")
     {
-      params['top'] = 1 - params['top'];
       sender = "U";
       dy = 1;
     }
     else if (to == "L")
     {
-        params['left'] = 1 - params['left'];
       sender = "R";
       dx = -1;
     }
     else if(to == "R")
     {
-      params['left'] = 1 - params['left'];
       sender = "L";
       dx = 1;
     }
@@ -125,6 +124,10 @@ router.get('/transmit', function(req, res) {
     //TODO: Determine if left/top should decide which screen to go to
     var nX = scr.x + dx;
     var nY = scr.y + dy;
+
+    params['left'] = superX - nX;
+    params['top'] = superY - nY;
+
     Screen.findOne({
       where: {
         x: nX,
