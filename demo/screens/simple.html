@@ -36,7 +36,7 @@ $(document).ready(function(){
     this.svg = canvass;
     this.hold = false;
     var ballObj = this;
-    this.rad = 5;
+    this.rad = 10;
 
     this.ball = canvass.append('circle')
     .attr("r", ballObj.rad)
@@ -110,7 +110,7 @@ $(document).ready(function(){
     return p * h;
   }
 
-  for (var i = 0; i < 7; i++) {
+  for (var i = 0; i < 4; i++) {
     balls.push(new Ball(svg, scaleX(Math.random()), scaleY(Math.random()), Math.random()*6 - 3, Math.random()*6 - 3, "red"));
   }
 
