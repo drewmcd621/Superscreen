@@ -47,6 +47,8 @@ app.get('/', function (req, res) {
 app.get('/receive/:name', function (req, res)
 {
   io.emit('newObj', {name: req.params.name, object: req.query});
+
+  res.json({success: 1});
 });
 
 app.get('/display', function (req, res)
