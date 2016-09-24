@@ -55,8 +55,6 @@
 
         ballObj.ball.attr("cx", ballObj.x)
                     .attr("cy", ballObj.y);
-        ballObj.checkWall();
-
       }
 
       this.checkWall = function()
@@ -64,26 +62,46 @@
         var hsvg = $(ballObj.svg.node()).height();
         var wsvg = $(ballObj.svg.node()).width();
 
+        var dir = null;
+
 
         if(ballObj.y - ballObj.rad <= 0)
         {
-          ballObj.dY *= -1;
+          dir = "U";
         }
         if(ballObj.y + ballObj.rad >= hsvg)
         {
-          ballObj.dY *= -1;
+          dir = "D";
         }
 
         if(ballObj.x - ballObj.rad <= 0)
         {
-          ballObj.dX *= -1;
+          dir = "L"
         }
         if(ballObj.x + ballObj.rad >= wsvg)
         {
-          ballObj.dX *= -1;
+          dir = "R";
         }
 
+        return dir;
 
+
+      }
+      this.bounce = function(horizontal)
+      {
+        if(horizontal)
+        {
+            ballObj.dX *= -1;
+        }
+        else
+        {
+          ballObj.dY *= -1;
+        }
+      }
+
+      this.delete = function()
+      {
+        ballObj.ball.remove();
       }
     }
 
@@ -99,12 +117,49 @@
       return p * h;
     }
 
-    balls.push(new Ball(svg, scaleX(Math.random()), scaleY(Math.random()), Math.random()*6 - 3, Math.random()*6 - 3));
-    balls.push(new Ball(svg, scaleX(Math.random()), scaleY(Math.random()), Math.random()*6 - 3, Math.random()*6 - 3));
+    for (var i = 0; i < 7; i++) {
+      balls.push(new Ball(svg, scaleX(Math.random()), scaleY(Math.random()), Math.random()*6 - 3, Math.random()*6 - 3));
+    }
 
     d3.timer(function () {
       for (var i = 0; i < balls.length; ++i) {
+            if( ! balls[i] ) continue;
             balls[i].move();
+            var wall = balls[i].checkWall();
+            if(wall)
+            {
+              var url = "http://flyingkiwibird.com:8085/api/transmit";
+              var data = {};
+              data["name"] = name;
+              data["to"] = wall;
+              data["left"] = balls[i].x / w;
+              data["top"] = balls[i].y / h;
+              data["xspeed"] = balls[i].dX / w;
+              data["yspeed"] = balls[i].dY / h;
+
+              $.getJSON(url, data).done(function(data){
+                if(data.success)
+                {
+                  if(data.sent)
+                  {
+                    balls[i].delete();
+                    balls[i] = null;
+                  }
+                }
+              }).always(function ()
+              {
+                if(balls[i])
+                {
+                  if(wall == "D" || wall == "U")
+                  {
+                    balls[i].bounce(false);
+                  }
+                  else {
+                    balls[i].bounce(true);
+                  }
+                }
+              });
+            }
         }
     }, 17); //A delay of 17 is about 60 fps
 
