@@ -2,6 +2,7 @@
 <head>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
   <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.6/d3.min.js"></script>
   <script>
   var socket = io();
   $(document).ready(function(){
@@ -19,16 +20,51 @@
 
       }
     });
+
+    var h = $("body").height();
+    var w = $("body").width();
+
+    var svg = d3.select("body")
+                .append("svg")
+                .attr("width", w)
+                .attr("height", h);
+
+    function Ball(canvass, posX, posY, speedX, speedY) {
+      this.dX = speedX;
+      this.dY = speedY;
+      this.x = posX;
+      this.y = posY;
+      this.svg = canvass;
+      var ballObj = this;
+      var R = 2;
+
+      this.ball = canvass.append('circle')
+                .attr({r: R,
+                      cx: ballObj.x, cy: ballObj.y})
+                .style("fill","red");
+      this.move = function(){
+        ballObj.x += ballObj.dX;
+        ballObj.y += ballObj.dY;
+
+        ballObj.ball.attr({cx: ballObj.x, cy: ballObj.y});
+
+      }
+    }
+
+    var balls = [];
+
+    balls.push(new Ball(svg, 15, 20, 0.01, 0.02));
+    balls.push(new Ball(svg, 42, 17, 0.02, 0.01));
+
+    d3.timer(function () {
+      for (var i = 0; i < balls.length; ++i) {
+            balls[i].move();
+        }
+    }, 17); //A delay of 17 is about 60 fps
+
   });
 
-  function blink()
-  {
-    $("body").css("background-color", "red").delay(1000).queue(function(next){
-      $(this).css("background-color", "white");
-      next();
-    });
 
-  }
 
   </script>
 </head>
