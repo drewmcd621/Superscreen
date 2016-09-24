@@ -14,13 +14,31 @@
     socket.on("newObj", function(data){
       if(name == data.name)
       {
-        alert("Got one!");
         console.log(data);
+        blink();
+
       }
     });
   });
 
+  function blink()
+  {
+    $("body").animate({
+      background-color: "red"
+    },
+    100,
+    function()
+    {
+      $("body").animate({
+        background-color: "white"
+      },
+      100,
+      function()
+      {
 
+      })
+    });
+  }
 
   </script>
 </head>
