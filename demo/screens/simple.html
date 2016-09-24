@@ -64,23 +64,26 @@ $(document).ready(function(){
       if(ballObj.y - ballObj.rad <= 0)
       {
         ballObj.dY = Math.abs(ballObj.dY);
-
+        ballObj.y = ballObj.rad + 3;
         dir = "U";
       }
       if(ballObj.y + ballObj.rad >= hsvg)
       {
         ballObj.dY = -1 * Math.abs(ballObj.dY);
+        ballObj.y = hsvg - (ballObj.rad  + 3);
         dir = "D";
       }
 
       if(ballObj.x - ballObj.rad <= 0)
       {
         ballObj.dX = Math.abs(ballObj.dX);
+        ballObj.x = ballObj.rad + 3;
         dir = "L"
       }
       if(ballObj.x + ballObj.rad >= wsvg)
       {
         ballObj.dX = -1 * Math.abs(ballObj.dX);
+        ballObj.x = wsvg - (ballObj.rad + 3);
         dir = "R";
       }
 
