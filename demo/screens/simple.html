@@ -18,12 +18,7 @@ $(document).ready(function(){
   var name = match[1];
   socket.emit('handshake', "hello I'm " + name);
 
-  socket.on("newObj", function(data){
-    if(name == data.name)
-    {
-      console.log(data);
-    }
-  });
+
 
   var h = $("body").height();
   var w = $("body").width();
@@ -33,7 +28,7 @@ $(document).ready(function(){
   .attr("width", w)
   .attr("height", h);
 
-  function Ball(canvass, posX, posY, speedX, speedY) {
+  function Ball(canvass, posX, posY, speedX, speedY, color) {
     this.dX = speedX;
     this.dY = speedY;
     this.x = posX;
@@ -47,7 +42,7 @@ $(document).ready(function(){
     .attr("r", ballObj.rad)
     .attr("cx", ballObj.x)
     .attr("cy", ballObj.y)
-    .style("fill","red");
+    .style("fill",color);
     this.move = function(){
       if(ballObj.hold) return;
       ballObj.x += ballObj.dX;
@@ -113,11 +108,21 @@ $(document).ready(function(){
   }
 
   for (var i = 0; i < 7; i++) {
-    balls.push(new Ball(svg, scaleX(Math.random()), scaleY(Math.random()), Math.random()*6 - 3, Math.random()*6 - 3));
+    balls.push(new Ball(svg, scaleX(Math.random()), scaleY(Math.random()), Math.random()*6 - 3, Math.random()*6 - 3, "red"));
   }
+
+  socket.on("newObj", function(data){
+    if(name == data.name)
+    {
+      console.log(data);
+      balls.push(new Ball(svg, scaleX(data.object.left), scaleX(data.object.top),scaleX(data.object.xspeed), scaleY(data.object.yspeed), "blue"));
+
+    }
+  });
 
   d3.timer(function () {
     for (var i = balls.length -1; i >= 0; --i) {
+      if(! balls[i]) continue;
       if(balls[i].hold) continue;
       balls[i].move();
       var wall = balls[i].checkWall();
