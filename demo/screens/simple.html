@@ -23,7 +23,10 @@
 
   function blink()
   {
-    $("body").css("background-color", "red").delay(4000).css("background-color", "white");
+    $("body").css("background-color", "red").delay(1000).queue(function(next){
+      $(this).css("background-color", "white");
+      next();
+    });
 
   }
 
