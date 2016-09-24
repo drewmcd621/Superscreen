@@ -63,26 +63,26 @@ $(document).ready(function(){
 
       if(ballObj.y - ballObj.rad <= 0)
       {
-        ballObj.dY = Math.abs(ballObj.dY);
+        //ballObj.dY = Math.abs(ballObj.dY);
         ballObj.y = ballObj.rad + 3;
         dir = "U";
       }
       if(ballObj.y + ballObj.rad >= hsvg)
       {
-        ballObj.dY = -1 * Math.abs(ballObj.dY);
+        //ballObj.dY = -1 * Math.abs(ballObj.dY);
         ballObj.y = hsvg - (ballObj.rad  + 3);
         dir = "D";
       }
 
       if(ballObj.x - ballObj.rad <= 0)
       {
-        ballObj.dX = Math.abs(ballObj.dX);
+        //ballObj.dX = Math.abs(ballObj.dX);
         ballObj.x = ballObj.rad + 3;
         dir = "L"
       }
       if(ballObj.x + ballObj.rad >= wsvg)
       {
-        ballObj.dX = -1 * Math.abs(ballObj.dX);
+        //ballObj.dX = -1 * Math.abs(ballObj.dX);
         ballObj.x = wsvg - (ballObj.rad + 3);
         dir = "R";
       }
@@ -90,6 +90,23 @@ $(document).ready(function(){
       return dir;
 
 
+    }
+
+    this.bounce = function(wall)
+    {
+      if(wall == "U")
+      {
+        ballObj.dY = Math.abs(ballObj.dY);
+      }
+      else if (wall = "D") {
+        ballObj.dY = -1 * Math.abs(ballObj.dY);
+      }
+      else if (wall = "L") {
+        ballObj.dX = Math.abs(ballObj.dX);
+      }
+      else if (wall = "R") {
+        ballObj.dX = -1 * Math.abs(ballObj.dX);
+      }
     }
 
     this.delete = function()
@@ -145,6 +162,8 @@ $(document).ready(function(){
         data["xspeed"] = thisBall.dX / w;
         data["yspeed"] = thisBall.dY / h;
 
+        thisBall.bounce(wall);
+
         console.log(data);
 
         $.getJSON(url, data).done(function(data){
@@ -162,6 +181,7 @@ $(document).ready(function(){
           {
             console.log("Reanimate!");
             thisBall.hold = false;
+
           }
         });
       }
