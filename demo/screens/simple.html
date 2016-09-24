@@ -44,6 +44,8 @@
       var ballObj = this;
       this.rad = 5;
 
+      console.log(ballObj.svg.style("width"));
+
       this.ball = canvass.append('circle')
                          .attr("r", ballObj.rad)
                          .attr("cx", ballObj.x)
@@ -67,7 +69,7 @@
           ballObj.dY *= -1;
           console.log("Bounce!");
         }
-        else if(ballObj.y + ballObj.rad >= ballObj.svg.style("height"))
+        if(ballObj.y + ballObj.rad >= ballObj.svg.style("height"))
         {
           ballObj.dY *= -1;
           console.log("Bounce!");
@@ -78,7 +80,7 @@
           ballObj.dX *= -1;
           console.log("Bounce!");
         }
-        else if(ballObj.x + ballObj.rad >= ballObj.svg.style("width"))
+        if(ballObj.x + ballObj.rad >= ballObj.svg.style("width"))
         {
           ballObj.dX *= -1;
           console.log("Bounce!");
