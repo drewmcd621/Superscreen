@@ -42,7 +42,8 @@ $(document).ready(function(){
     .attr("r", ballObj.rad)
     .attr("cx", ballObj.x)
     .attr("cy", ballObj.y)
-    .style("fill",color);
+    .style("fill",color)
+    .style("opacity","0.7");
     this.move = function(){
       if(ballObj.hold) return;
       ballObj.x += ballObj.dX;
@@ -64,13 +65,13 @@ $(document).ready(function(){
       if(ballObj.y - ballObj.rad <= 0)
       {
         //ballObj.dY = Math.abs(ballObj.dY);
-        ballObj.y = ballObj.rad + 15;
+        ballObj.y = ballObj.rad + 3;
         dir = "U";
       }
       if(ballObj.y + ballObj.rad >= hsvg)
       {
         //ballObj.dY = -1 * Math.abs(ballObj.dY);
-        ballObj.y = hsvg - (ballObj.rad  + 15);
+        ballObj.y = hsvg - (ballObj.rad  + 3);
         dir = "D";
       }
 
@@ -88,8 +89,6 @@ $(document).ready(function(){
       }
 
 
-      ballObj.ball.attr("cx", ballObj.x)
-      .attr("cy", ballObj.y);
       return dir;
 
 
@@ -130,8 +129,8 @@ $(document).ready(function(){
     return p * h;
   }
 
-  for (var i = 0; i < 1; i++) {
-    balls.push(new Ball(svg, scaleX(Math.random()), scaleY(Math.random()), 1, 2, "red"));
+  for (var i = 0; i < 5; i++) {
+    balls.push(new Ball(svg, scaleX(Math.random()), scaleY(Math.random()), 3*Math.random()-1.5, 3*Math.random()-1.5, "red"));
   }
 
   socket.on("newObj", function(data){
