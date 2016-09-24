@@ -96,25 +96,25 @@ router.get('/transmit', function(req, res) {
     //TODO: Validate inputs
     if(to == "U")
     {
-      params['top'] = 1;
+      params['top'] = 1 - params['top'];
       sender = "D";
       dy = -1;
     }
     else if(to == "D")
     {
-      params['top'] = 0;
+      params['top'] = 1 - params['top'];
       sender = "U";
       dy = 1;
     }
     else if (to == "L")
     {
-      params['left'] = 1;
+        params['left'] = 1 - params['left'];
       sender = "R";
       dx = -1;
     }
     else if(to == "R")
     {
-      params['left'] = 0;
+      params['left'] = 1 - params['left'];
       sender = "L";
       dx = 1;
     }
