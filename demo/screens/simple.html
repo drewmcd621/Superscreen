@@ -1,164 +1,175 @@
 <html>
 <head>
-  <style>
-    body
+<style>
+body
+{
+  margin:0;
+}
+</style>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.6/d3.min.js"></script>
+<script>
+var socket = io();
+$(document).ready(function(){
+  var r_name = /\?name=([^&]+)/;
+  var match = r_name.exec(window.location.href);
+
+  var name = match[1];
+  socket.emit('handshake', "hello I'm " + name);
+
+  socket.on("newObj", function(data){
+    if(name == data.name)
     {
-      margin:0;
+      console.log(data);
     }
-  </style>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
-  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.6/d3.min.js"></script>
-  <script>
-  var socket = io();
-  $(document).ready(function(){
-    var r_name = /\?name=([^&]+)/;
-    var match = r_name.exec(window.location.href);
-
-    var name = match[1];
-    socket.emit('handshake', "hello I'm " + name);
-
-    socket.on("newObj", function(data){
-      if(name == data.name)
-      {
-        console.log(data);
-      }
-    });
-
-    var h = $("body").height();
-    var w = $("body").width();
-
-    var svg = d3.select("body")
-                .append("svg")
-                .attr("width", w)
-                .attr("height", h);
-
-    function Ball(canvass, posX, posY, speedX, speedY) {
-      this.dX = speedX;
-      this.dY = speedY;
-      this.x = posX;
-      this.y = posY;
-      this.svg = canvass;
-      this.hold = false;
-      var ballObj = this;
-      this.rad = 5;
-
-      this.ball = canvass.append('circle')
-                         .attr("r", ballObj.rad)
-                         .attr("cx", ballObj.x)
-                         .attr("cy", ballObj.y)
-                         .style("fill","red");
-      this.move = function(){
-        if(ballObj.hold) return;
-        ballObj.x += ballObj.dX;
-        ballObj.y += ballObj.dY;
-
-        ballObj.ball.attr("cx", ballObj.x)
-                    .attr("cy", ballObj.y);
-      }
-
-      this.checkWall = function()
-      {
-        if(ballObj.hold) return;
-        var hsvg = $(ballObj.svg.node()).height();
-        var wsvg = $(ballObj.svg.node()).width();
-
-        var dir = null;
-
-
-        if(ballObj.y - ballObj.rad <= 0)
-        {
-          ballObj.dY = Math.abs(ballObj.dY);
-
-          dir = "U";
-        }
-        if(ballObj.y + ballObj.rad >= hsvg)
-        {
-          ballObj.dY = -1 * Math.abs(ballObj.dY);
-          dir = "D";
-        }
-
-        if(ballObj.x - ballObj.rad <= 0)
-        {
-          ballObj.dX = Math.abs(ballObj.dX);
-          dir = "L"
-        }
-        if(ballObj.x + ballObj.rad >= wsvg)
-        {
-          ballObj.dX = -1 * Math.abs(ballObj.dX);
-          dir = "R";
-        }
-
-        return dir;
-
-
-      }
-
-      this.delete = function()
-      {
-        ballObj.ball.remove();
-      }
-    }
-
-    var balls = [];
-
-    function scaleX(p)
-    {
-      return p * w;
-    }
-
-    function scaleY(p)
-    {
-      return p * h;
-    }
-
-    for (var i = 0; i < 7; i++) {
-      balls.push(new Ball(svg, scaleX(Math.random()), scaleY(Math.random()), Math.random()*6 - 3, Math.random()*6 - 3));
-    }
-
-    d3.timer(function () {
-      for (var i = balls.length -1; i >= 0; --i) {
-            if(balls[i].hold) continue;
-            balls[i].move();
-            var wall = balls[i].checkWall();
-            if(wall)
-            {
-              balls[i].hold = true; //Hold the ball in place
-
-              var url = "http://flyingkiwibird.com:8085/api/transmit";
-              var data = {};
-              data["name"] = name;
-              data["to"] = wall;
-              data["left"] = balls[i].x / w;
-              data["top"] = balls[i].y / h;
-              data["xspeed"] = balls[i].dX / w;
-              data["yspeed"] = balls[i].dY / h;
-
-              $.getJSON(url, data).done(function(data){
-                console.log(data);
-                if(data.success)
-                {
-                  if(data.sent)
-                  {
-                    balls[i].delete();
-                    balls.splice(i, 1);  //Ball is on another screen now...
-                  }
-                }
-              }).always(function(){
-                if(balls[i])
-                {
-                  balls[i].hold = false;
-                }
-              });
-            }
-        }
-    }, 17); //A delay of 17ms is about 60 fps
-
   });
 
+  var h = $("body").height();
+  var w = $("body").width();
+
+  var svg = d3.select("body")
+  .append("svg")
+  .attr("width", w)
+  .attr("height", h);
+
+  function Ball(canvass, posX, posY, speedX, speedY) {
+    this.dX = speedX;
+    this.dY = speedY;
+    this.x = posX;
+    this.y = posY;
+    this.svg = canvass;
+    this.hold = false;
+    var ballObj = this;
+    this.rad = 5;
+
+    this.ball = canvass.append('circle')
+    .attr("r", ballObj.rad)
+    .attr("cx", ballObj.x)
+    .attr("cy", ballObj.y)
+    .style("fill","red");
+    this.move = function(){
+      if(ballObj.hold) return;
+      ballObj.x += ballObj.dX;
+      ballObj.y += ballObj.dY;
+
+      ballObj.ball.attr("cx", ballObj.x)
+      .attr("cy", ballObj.y);
+    }
+
+    this.checkWall = function()
+    {
+      if(ballObj.hold) return;
+      var hsvg = $(ballObj.svg.node()).height();
+      var wsvg = $(ballObj.svg.node()).width();
+
+      var dir = null;
 
 
-  </script>
+      if(ballObj.y - ballObj.rad <= 0)
+      {
+        ballObj.dY = Math.abs(ballObj.dY);
+
+        dir = "U";
+      }
+      if(ballObj.y + ballObj.rad >= hsvg)
+      {
+        ballObj.dY = -1 * Math.abs(ballObj.dY);
+        dir = "D";
+      }
+
+      if(ballObj.x - ballObj.rad <= 0)
+      {
+        ballObj.dX = Math.abs(ballObj.dX);
+        dir = "L"
+      }
+      if(ballObj.x + ballObj.rad >= wsvg)
+      {
+        ballObj.dX = -1 * Math.abs(ballObj.dX);
+        dir = "R";
+      }
+
+      return dir;
+
+
+    }
+
+    this.delete = function()
+    {
+      ballObj.ball.remove();
+    }
+  }
+
+  var balls = [];
+
+  function scaleX(p)
+  {
+    return p * w;
+  }
+
+  function scaleY(p)
+  {
+    return p * h;
+  }
+
+  for (var i = 0; i < 7; i++) {
+    balls.push(new Ball(svg, scaleX(Math.random()), scaleY(Math.random()), Math.random()*6 - 3, Math.random()*6 - 3));
+  }
+
+  d3.timer(function () {
+    for (var i = balls.length -1; i >= 0; --i) {
+      if(balls[i].hold) continue;
+      balls[i].move();
+      var wall = balls[i].checkWall();
+      if(wall)
+      {
+        balls[i].hold = true; //Hold the ball in place
+
+        var thisBall = balls[i];
+        var idx = i;
+
+        var url = "http://flyingkiwibird.com:8085/api/transmit";
+        var data = {};
+        data["name"] = name;
+        data["to"] = wall;
+        data["left"] = thisBall.x / w;
+        data["top"] = thisBall.y / h;
+        data["xspeed"] = thisBall.dX / w;
+        data["yspeed"] = thisBall.dY / h;
+
+        $.getJSON(url, data).done(function(data){
+          console.log(data);
+          if(data.success)
+          {
+            if(data.sent)
+            {
+              thisBall.delete();
+              balls[idx] = null;  //Ball is on another screen now...
+            }
+          }
+        }).always(function(){
+          if(thisBall)
+          {
+            console.log("Reanimate!");
+            thisBall.hold = false;
+          }
+        });
+      }
+    }
+    //Remove nulls
+    for (var i = balls.length -1; i >= 0; --i) {
+      if(! balls[i])
+      {
+        balls.splice(i, 1);
+      }
+    }
+  }, 17); //A delay of 17ms is about 60 fps
+
+});
+
+
+
+</script>
 </head>
 <body>
 
