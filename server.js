@@ -93,8 +93,10 @@ router.get('/transmit', function(req, res) {
     var dx = 0;
     var dy = 0;
 
-    var superX =  params['left'] + scr.x;
-    var superY = params['top'] + scr.y;
+    var superX =  req.query.left + scr.x;
+    var superY = req.query.top + scr.y;
+
+    console.log({x: superX, y: superY, sX: scr.x, sY: scr.y});
 
     //TODO: Validate inputs
     if(to == "U")
@@ -125,8 +127,10 @@ router.get('/transmit', function(req, res) {
     var nX = scr.x + dx;
     var nY = scr.y + dy;
 
-    params['left'] = superX - (nX - 1);
-    params['top'] = superY - (nY - 1);
+    params['left'] = superX - nX;
+    params['top'] = superY - nY;
+
+    console.log({x: params['left'], y: params['top'], sX: nX, sY: nY});
 
     Screen.findOne({
       where: {
