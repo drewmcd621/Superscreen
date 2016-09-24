@@ -2,6 +2,7 @@
   "name": "superscreen-demo",
   "main": "demo.js",
   "dependencies": {
+    "cookie-parser": "^1.4.3",
     "express": "~4.8.0",
     "node-uuid": "^1.4.7",
     "request": "^2.75.0",
