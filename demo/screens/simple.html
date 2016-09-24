@@ -22,8 +22,6 @@
       if(name == data.name)
       {
         console.log(data);
-        blink();
-
       }
     });
 
@@ -142,8 +140,14 @@
                 {
                   if(data.sent)
                   {
+                    balls[i].delete();
                     balls.splice(i, 1);  //Ball is on another screen now...
                   }
+                }
+              }).always(function(){
+                if(balls[i])
+                {
+                  balls[i].hold = false;
                 }
               });
             }
