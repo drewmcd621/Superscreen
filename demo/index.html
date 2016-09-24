@@ -1,6 +1,5 @@
 <html>
 <head>
-  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
   <style>
     iframe
     {
@@ -15,27 +14,15 @@
     }
 
   </style>
-  <script>
-    $(document).ready(function(){
-      var r_uuid = /uuid=([^&]+)/;
-      var match = r_uuid.exec(window.location.href);
-      var uuid = match[1];
-      $("iframe").each(function(){
-        var scr = $(this).prop('id');
-        var url = "http://flyingkiwibird.com:8086/display?name=" + scr + "&uuid=" + uuid;
-        $(this).prop("src", url);
-      })
-    });
-  </script>
 </head>
 <body>
   <div class="top-row row">
-    <iframe id="screen1" src="" width="40%" height="40%"></iframe>
-    <iframe id="screen2" src=""width="40%" height="40%"></iframe>
+    <iframe src="http://flyingkiwibird.com:8086/display?name=screen1" width="40%" height="40%"></iframe>
+    <iframe src="http://flyingkiwibird.com:8086/display?name=screen2"width="40%" height="40%"></iframe>
   </div>
   <div class="bot-row row">
-    <iframe id="screen3" src="" width="40%" height="40%"></iframe>
-    <iframe id="screen4" src="" width="40%" height="40%"></iframe>
+    <iframe src="http://flyingkiwibird.com:8086/display?name=screen3" width="40%" height="40%"></iframe>
+    <iframe src="http://flyingkiwibird.com:8086/display?name=screen4" width="40%" height="40%"></iframe>
   </div>
 </body>
 </html>

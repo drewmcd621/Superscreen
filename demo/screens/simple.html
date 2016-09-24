@@ -17,11 +17,8 @@ $(document).ready(function(){
 
   var name = match[1];
 
-  var r_uuid = /uuid=([^&]+)/;
-  var match = r_uuid.exec(window.location.href);
-  var uuid = match[1];
+  socket.emit('handshake', "hello I'm " + name);
 
-  socket.emit('handshake', "hello I'm " + name + " on channel " + uuid);
 
 
 
@@ -151,13 +148,10 @@ $(document).ready(function(){
   }
 
   socket.on("newObj", function(data){
-    if(uuid == data.uuid)
+    if(name == data.name)
     {
-      if(name == data.name)
-      {
-        var l = balls.push(new Ball(svg, scaleX(data.object.left), scaleY(data.object.top),scaleX(data.object.xspeed), scaleY(data.object.yspeed), "blue"));
-        balls[l-1].immune = true; // Make new balls immune to bouncing
-      }
+      var l = balls.push(new Ball(svg, scaleX(data.object.left), scaleY(data.object.top),scaleX(data.object.xspeed), scaleY(data.object.yspeed), "blue"));
+      balls[l-1].immune = true; // Make new balls immune to bouncing
     }
   });
 

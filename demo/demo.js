@@ -2,7 +2,6 @@
 var express     = require('express');
 var app         = express();
 var path = require('path');
-var uuid = require('uuid');
 
 var port = process.env.PORT || 8086;        // set port for server
 
@@ -39,35 +38,17 @@ request("http://" + apiDomain + "/api/setup", function(err, resp, body) {
 
 });
 
-app.use(express.cookieParser());
-app.use(express.session({secret: '123fsdad78f90QafdTY'}));  //I don't really care if you know this secret because it's just a demo
-
 
 app.get('/', function (req, res) {
-  if(req.query.uuid)
-  {
-    res.sendFile(path.join(__dirname + '/index.html'));
-  }
-  else {
-    var ch = uuid.v1();
-    req.session.channel = ch;
-    res.redirect("/?uuid=" + ch);
-  }
+  res.sendFile(path.join(__dirname + '/index.html'));
 });
-
 
 //Handles the transmit messages and sends them via socket.io
 app.get('/receive/:name', function (req, res)
 {
-  if(req.session.channel)
-  {
-    io.emit('newObj', {uuid: req.session.channel, name: req.params.name, object: req.query});
+  io.emit('newObj', {name: req.params.name, object: req.query});
 
-    res.json({success: 1});
-  }
-  else {
-    res.json({success: 0, error: "No UUID channel specified"});
-  }
+  res.json({success: 1});
 });
 
 app.get('/display', function (req, res)
