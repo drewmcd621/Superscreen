@@ -128,36 +128,42 @@
             var wall = balls[i].checkWall();
             if(wall)
             {
+              var tempBall = balls[i];
+              balls[i] = null;
+
               var url = "http://flyingkiwibird.com:8085/api/transmit";
               var data = {};
               data["name"] = name;
               data["to"] = wall;
-              data["left"] = balls[i].x / w;
-              data["top"] = balls[i].y / h;
-              data["xspeed"] = balls[i].dX / w;
-              data["yspeed"] = balls[i].dY / h;
+              data["left"] = tempBall.x / w;
+              data["top"] = tempBall.y / h;
+              data["xspeed"] = tempBall.dX / w;
+              data["yspeed"] = tempBall.dY / h;
 
               $.getJSON(url, data).done(function(data){
+                console.log(data);
                 if(data.success)
                 {
                   if(data.sent)
                   {
-                    balls[i].delete();
-                    balls[i] = null;
+                    tempBall.delete();
+                    tempBall = null;
+
                   }
                 }
               }).always(function ()
               {
-                if(balls[i])
+                if(tempBall)
                 {
                   if(wall == "D" || wall == "U")
                   {
-                    balls[i].bounce(false);
+                    tempBall.bounce(false);
                   }
                   else {
-                    balls[i].bounce(true);
+                    tempBall.bounce(true);
                   }
                 }
+                balls.push(tempBall);
               });
             }
         }
