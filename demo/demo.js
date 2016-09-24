@@ -42,7 +42,7 @@ request("http://" + apiDomain + "/api/setup", function(err, resp, body) {
 });
 
 app.use(cookieParser());
-app.use(session({secret: "not a secret"}));
+app.use(session());
 
 app.get('/', function (req, res) {
   if(req.query.uuid)
