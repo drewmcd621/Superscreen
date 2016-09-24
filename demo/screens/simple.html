@@ -115,8 +115,8 @@ $(document).ready(function(){
     if(name == data.name)
     {
       console.log(data);
-      balls.push(new Ball(svg, scaleX(data.object.left), scaleX(data.object.top),scaleX(data.object.xspeed), scaleY(data.object.yspeed), "blue"));
-
+      var l = balls.push(new Ball(svg, scaleX(data.object.left), scaleX(data.object.top),scaleX(data.object.xspeed), scaleY(data.object.yspeed), "blue"));
+      balls[l-1].move(); //Move the ball a step on load
     }
   });
 
