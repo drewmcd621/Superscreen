@@ -23,21 +23,8 @@
 
   function blink()
   {
-    $("body").animate({
-      background-color: "red"
-    },
-    100,
-    function()
-    {
-      $("body").animate({
-        background-color: "white"
-      },
-      100,
-      function()
-      {
+    $("body").style("background-color", "red").delay(500).style("background-color", "white");
 
-      })
-    });
   }
 
   </script>
