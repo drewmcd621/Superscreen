@@ -61,10 +61,9 @@
 
       this.checkWall = function()
       {
-        var bb = ballObj.svg.node().getBBox();
-        console.log(bb);
-        var hsvg = bb.height;
-        var wsvg = bb.width;
+        var hsvg = $(ballObj.svg).height();
+        var wsvg = $(ballObj.svg).width();
+
 
         if(ballObj.y - ballObj.rad <= 0)
         {
