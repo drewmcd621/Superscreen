@@ -3,7 +3,6 @@ var express     = require('express');
 var app         = express();
 var path = require('path');
 var uuid = require('uuid');
-var cookieParser = require('cookie-parser');
 
 var port = process.env.PORT || 8086;        // set port for server
 
@@ -40,7 +39,9 @@ request("http://" + apiDomain + "/api/setup", function(err, resp, body) {
 
 });
 
-app.use(cookieParser());
+app.use(express.cookieParser());
+app.use(express.session({secret: '123fsdad78f90QafdTY'}));  //I don't really care if you know this secret because it's just a demo
+
 
 app.get('/', function (req, res) {
   if(req.query.uuid)
