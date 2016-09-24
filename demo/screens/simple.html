@@ -64,13 +64,13 @@ $(document).ready(function(){
       if(ballObj.y - ballObj.rad <= 0)
       {
         //ballObj.dY = Math.abs(ballObj.dY);
-        ballObj.y = ballObj.rad + 3;
+        ballObj.y = ballObj.rad + 15;
         dir = "U";
       }
       if(ballObj.y + ballObj.rad >= hsvg)
       {
         //ballObj.dY = -1 * Math.abs(ballObj.dY);
-        ballObj.y = hsvg - (ballObj.rad  + 3);
+        ballObj.y = hsvg - (ballObj.rad  + 15);
         dir = "D";
       }
 
@@ -87,6 +87,9 @@ $(document).ready(function(){
         dir = "R";
       }
 
+
+      ballObj.ball.attr("cx", ballObj.x)
+      .attr("cy", ballObj.y);
       return dir;
 
 
