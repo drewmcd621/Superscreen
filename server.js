@@ -125,8 +125,8 @@ router.get('/transmit', function(req, res) {
     var nX = scr.x + dx;
     var nY = scr.y + dy;
 
-    params['left'] = superX - nX;
-    params['top'] = superY - nY;
+    params['left'] = superX - (nX - 1);
+    params['top'] = superY - (nY - 1);
 
     Screen.findOne({
       where: {
