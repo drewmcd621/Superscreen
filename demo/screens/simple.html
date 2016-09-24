@@ -16,9 +16,7 @@ $(document).ready(function(){
   var match = r_name.exec(window.location.href);
 
   var name = match[1];
-
   socket.emit('handshake', "hello I'm " + name);
-
 
 
 
