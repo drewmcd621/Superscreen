@@ -144,9 +144,9 @@ router.get('/transmit', function(req, res) {
             console.error(err);
             res.json({success:0, error: "Error when transmitting", detail: err});
           }
-          if(resp.statusCode == 200)
+          else if(resp.statusCode == 200)
           {
-            res.json({success:1, sent:1, newScreen: newScr.id, response: body}); //Everything went well
+            res.json({success:1, sent:1, oldScreen:scr.name , newScreen: newScr.name, response: body}); //Everything went well
           }
           else {
             res.json({success:0, error: "Error when transmitting", code: resp.statusCode});
