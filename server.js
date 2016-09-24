@@ -93,8 +93,8 @@ router.get('/transmit', function(req, res) {
     var dx = 0;
     var dy = 0;
 
-    var superX =  req.query.left + scr.x;
-    var superY = req.query.top + scr.y;
+    var superX =  parseFloat(req.query.left) + scr.x;
+    var superY = parseFloat(req.query.top) + scr.y;
 
     console.log({x: superX, y: superY, sX: scr.x, sY: scr.y});
 
