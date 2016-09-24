@@ -9,6 +9,11 @@
     var match = r_name.exec(window.location.href);
 
     socket.emit('handshake', "hello I'm " + match[1]);
+
+    socket.on("newObj", function(data){
+        alert("Got one!");
+        console.log(data);
+    });
   });
 
 

@@ -46,7 +46,7 @@ app.get('/', function (req, res) {
 //Handles the transmit messages and sends them via socket.io
 app.get('/receive/:name', function (req, res)
 {
-
+  io.emit('newObj', {name: req.params.name, object:req.query});
 });
 
 app.get('/display', function (req, res)
@@ -62,7 +62,9 @@ io.on('connection', function(socket){
 
   socket.on('handshake', function(msg){
     console.log(msg);
-  })
+  });
+
+
 });
 
 
