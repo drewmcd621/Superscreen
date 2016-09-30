@@ -66,6 +66,7 @@ $(document).ready(function(){
     .attr("r", ballObj.rad)
     .attr("cx", ballObj.x)
     .attr("cy", ballObj.y)
+    .attr("name", name)
     .style("fill",color)
     .style("opacity","0.7");
     this.move = function(){
@@ -191,6 +192,8 @@ $(document).ready(function(){
         thisBall.hold = true;
         thisBall.ball.attr("held", "true");
 
+        console.debug("Holding ball " + idx + " on " + name);
+
         var url = "http://flyingkiwibird.com:8085/api/transmit";
         var data = {};
         data["channel"] = channel;
@@ -222,7 +225,11 @@ $(document).ready(function(){
 
             thisBall.hold = false;
             thisBall.ball.attr("held", "false");
+            console.debug("Unheld " + idx + " on " + name);
 
+          }
+          else {
+            console.debug("Ball not found, can't unhold" + " on " + name);
           }
         });
       }
