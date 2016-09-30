@@ -12,8 +12,8 @@ body
 <script>
 var socket = io();
 $(document).ready(function(){
-  var r_name = /\name=([^&]+)/;
-  var r_channel = /\channel=([^&]+)/;
+  var r_name = /name=([^&]+)/;
+  var r_channel = /channel=([^&]+)/;
 
   var match = r_name.exec(window.location.href);
   var name = match[1];
