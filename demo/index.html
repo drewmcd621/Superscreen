@@ -1,5 +1,23 @@
 <html>
 <head>
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+  <script>
+      $(document).ready(function(){
+          var time = Date.now();
+          var max = 99999;
+          var min = 10000;
+          var rand = Math.floor(Math.random() * (max - min + 1)) + min;
+          var channel = rand + "|" + time;
+
+          var base_url = "http://flyingkiwibird.com:8086/display";
+
+          $("iframe").each(function() {
+            var name = $(this).data("name");
+            var url = base_url + "?name=" + name + "&channel=" + channel;
+            $(this).attr("src", url);
+          });
+      });
+  </script>
   <style>
     iframe
     {
@@ -17,12 +35,12 @@
 </head>
 <body>
   <div class="top-row row">
-    <iframe src="http://flyingkiwibird.com:8086/display?name=screen1" width="40%" height="40%"></iframe>
-    <iframe src="http://flyingkiwibird.com:8086/display?name=screen2"width="40%" height="40%"></iframe>
+    <iframe src="" data-name="screen1" width="40%" height="40%"></iframe>
+    <iframe src="" data-name="screen2" width="40%" height="40%"></iframe>
   </div>
   <div class="bot-row row">
-    <iframe src="http://flyingkiwibird.com:8086/display?name=screen3" width="40%" height="40%"></iframe>
-    <iframe src="http://flyingkiwibird.com:8086/display?name=screen4" width="40%" height="40%"></iframe>
+    <iframe src="" data-name="screen3" width="40%" height="40%"></iframe>
+    <iframe src="" data-name="screen4" width="40%" height="40%"></iframe>
   </div>
 </body>
 </html>

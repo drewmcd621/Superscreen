@@ -77,6 +77,8 @@ router.get('/transmit', function(req, res) {
 
     var params = {};
 
+    params['channel'] = req.query.channel;  //A chanel can be specified for a vizualization that can have multiple instances such as on the internet.
+
     params['left'] = req.query.left; // distance from left of the screen / total screen width
     params['top'] = req.query.top; // distance from top of the screen / total screen height
 
