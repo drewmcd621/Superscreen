@@ -189,8 +189,8 @@ $(document).ready(function(){
         var thisBall = balls[i];
         var idx = i;
 
-        thisBall.hold = true;
-        thisBall.ball.attr("held", "true");
+        balls[idx].hold = true;
+        balls[idx].ball.attr("held", "true");
 
         console.debug("Holding ball " + idx + " on " + name);
 
