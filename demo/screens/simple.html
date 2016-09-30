@@ -205,9 +205,7 @@ $(document).ready(function(){
         data["yspeed"] = thisBall.dY / h;
         data["info"] = {color: thisBall.color};
 
-        thisBall.bounce(wall);
-
-
+        balls[idx].bounce(wall);
 
         $.getJSON(url, data).done(function(data){
           console.log(data);
@@ -218,13 +216,18 @@ $(document).ready(function(){
               thisBall.delete();
               balls[idx] = null;  //Ball is on another screen now...
             }
+            else {
+              console.info("bounce");
+            }
           }
+        }).fail(function() {
+          console.error("URL error");
         }).always(function(){
-          if(thisBall)
+          if(balls[idx])
           {
 
-            thisBall.hold = false;
-            thisBall.ball.attr("held", "false");
+            balls[idx].hold = false;
+            balls[idx].ball.attr("held", "false");
             console.debug("Unheld " + idx + " on " + name);
 
           }
