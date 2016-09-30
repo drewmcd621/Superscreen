@@ -21,7 +21,7 @@ $(document).ready(function(){
   var match = r_channel.exec(window.location.href);
   var channel = match[1];
 
-  socket.emit('handshake', "hello I'm " + name " on ch. " + channel);
+  socket.emit('handshake', "hello I'm " + name + " on ch. " + channel);
 
 
 
