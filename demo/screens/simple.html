@@ -23,7 +23,24 @@ $(document).ready(function(){
 
   socket.emit('handshake', "hello I'm " + name + " on ch. " + channel);
 
+  var color = null;
 
+  if(name == "screen1")
+  {
+    color = "red";
+  }
+  else if(name == "screen2")
+  {
+    color = "blue";
+  }
+  else if(name == "screen3")
+  {
+    color = "orange";
+  }
+  else if(name == "screen4")
+  {
+    color = "green";
+  }
 
   var h = $("body").height();
   var w = $("body").width();
@@ -43,6 +60,7 @@ $(document).ready(function(){
     var ballObj = this;
     this.rad = 10;
     this.immune = false;
+    this.color = color;
 
     this.ball = canvass.append('circle')
     .attr("r", ballObj.rad)
@@ -147,13 +165,13 @@ $(document).ready(function(){
 
   var maxVel = 5;
   for (var i = 0; i < 1; i++) {
-    balls.push(new Ball(svg, scaleX(Math.random()), scaleY(Math.random()), maxVel*2*Math.random()-maxVel, maxVel*2*Math.random()-maxVel, "red"));
+    balls.push(new Ball(svg, scaleX(Math.random()), scaleY(Math.random()), maxVel*2*Math.random()-maxVel, maxVel*2*Math.random()-maxVel, color));
   }
 
   socket.on("newObj", function(data){
     if(name == data.name && channel == data.object.channel)
     {
-      var l = balls.push(new Ball(svg, scaleX(data.object.left), scaleY(data.object.top),scaleX(data.object.xspeed), scaleY(data.object.yspeed), "blue"));
+      var l = balls.push(new Ball(svg, scaleX(data.object.left), scaleY(data.object.top),scaleX(data.object.xspeed), scaleY(data.object.yspeed), data.object.info.color));
       balls[l-1].immune = true; // Make new balls immune to bouncing
     }
   });
@@ -182,6 +200,7 @@ $(document).ready(function(){
         data["top"] = thisBall.y / h;
         data["xspeed"] = thisBall.dX / w;
         data["yspeed"] = thisBall.dY / h;
+        data["info"] = {color: thisBall.color};
 
         thisBall.bounce(wall);
 
