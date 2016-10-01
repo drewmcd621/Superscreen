@@ -196,7 +196,11 @@ $(document).ready(function(){
 
   d3.timer(function () {
     $.each(balls, function (index, ball) {
-      if(ball.hold) return true;
+      if(ball.hold)
+      {
+        console.log("holding " + ball.name);
+        return true;
+      }
       ball.move();
       var wall = ball.checkWall();
       if(wall)
