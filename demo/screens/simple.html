@@ -195,7 +195,7 @@ $(document).ready(function(){
 
       balls[id] = new Ball(svg, scaleX(data.object.left), scaleY(data.object.top),scaleX(data.object.xspeed), scaleY(data.object.yspeed), data.object.info.color);
       balls[id].immune = true; // Make new balls immune to bouncing
-      balls[id].setName(ball_name);
+      balls[id].setName(id);
     }
   });
 console.log(balls);
