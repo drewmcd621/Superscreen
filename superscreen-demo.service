@@ -2,7 +2,7 @@
 Description=Node Superscreen Demo
 
 [Service]
-ExecStart=/usr/bin/node /var/http/superscreen/deom/demo.js
+ExecStart=/usr/bin/node /var/http/superscreen/demo/demo.js
 Restart=always
 RestartSec=10                       # Restart service after 10 seconds if node service crashes
 StandardOutput=syslog               # Output to syslog
