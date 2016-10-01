@@ -3,6 +3,7 @@ Description=Node Superscreen Server
 
 [Service]
 ExecStart=/usr/bin/node /var/http/superscreen/server.js
+WorkingDirectory=/var/http/superscreen/
 Restart=always
 RestartSec=10                       # Restart service after 10 seconds if node service crashes
 StandardOutput=syslog               # Output to syslog
