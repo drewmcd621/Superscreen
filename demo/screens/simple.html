@@ -199,6 +199,7 @@ $(document).ready(function(){
   });
 console.log(balls);
   d3.timer(function () {
+    console.log("tick");
     $.each(balls, function (index, ball) {
       if(ball.held)
       {
@@ -247,7 +248,7 @@ console.log(balls);
       }
     });
 
-  }, 16); //A delay of 17ms is about 60 fps
+  }, 17); //A delay of 17ms is about 60 fps
 
 });
 
