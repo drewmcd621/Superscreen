@@ -1,4 +1,4 @@
-#### Superscreen
+# Superscreen
 
 Superscreen is a server which co-ordinates the transfer of "particles" between multiple applications.  It is designed for multi screen displays that can interact in some way with each other.
 
@@ -6,11 +6,11 @@ This project inspired by the [Exquisite Donut](https://github.com/workergnome/ex
 
 A demo can be found at [superscreen.flyingkiwibird.com](http://superscreen.flyingkiwibird.com/)
 
-### API
+## API
 
 The server uses an JSON based API to inform other screen applications of particle transfers.
 
-##  Register
+###  Register
 
 Register a screen in the display
 
@@ -24,7 +24,7 @@ Params:
 (e.g. if this is the top-left most screen x = 0, y = 0)
 * callbback - a URL this screen will listen to for particle transfers
 
-## Transmit
+### Transmit
 
 Transmit a partical from this screen to another one
 
@@ -40,13 +40,13 @@ URL : /api/transmit
 * yaccel - Acceleration in the Y direction (% of vertical screen / s^2)
 * info - JSON structured data to be passed between screens with the item, can be anything really
 
-## Start
+### Start
 
 Starts a fresh superscreen display (i.e. truncates the screen table)
 
 URL: /api/start
 
-### Improvements / TODO
+## Improvements / TODO
 
 * Implement a "pooling" method for transmission rather than callback (although callback is strictly better)
 * Allow for multiple superscreen display sets handled by a single server
