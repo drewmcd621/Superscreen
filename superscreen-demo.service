@@ -1,9 +1,9 @@
 [Unit]
-Description=Awesome Express App
+Description=Superscreen Demo
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/node /var/http/superscreen/demo/demo.js
+ExecStart=/usr/bin/node /var/http/superscreen/demo/demo.js
 WorkingDirectory=/var/http/superscreen/demo
 
 User=nobody
