@@ -236,11 +236,11 @@ console.log(balls);
               delete balls[index];
             }
             else {
-
+              console.warn(data);
             }
           }
-        }).fail(function() {
-
+        }).fail(function(j, text, error) {
+          console.error(error);
         }).always(function(){
 
           ball.hold(false);
