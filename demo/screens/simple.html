@@ -202,10 +202,8 @@ $(document).ready(function(){
       if(wall)
       {
 
-        var idx = index
-
-        balls[idx].hold = true;
-        balls[idx].ball.attr("held", "true");
+        balls[index].hold = true;
+        balls[index].ball.attr("held", "true");
 
 
 
@@ -220,7 +218,7 @@ $(document).ready(function(){
         data["yspeed"] = ball.dY / h;
         data["info"] = {color: ball.color, name: ball.name};
 
-        balls[idx].bounce(wall);
+        balls[index].bounce(wall);
 
         $.getJSON(url, data).done(function(data){
 
@@ -228,8 +226,8 @@ $(document).ready(function(){
           {
             if(data.sent)
             {
-              balls[idx].delete();
-              delete balls[idx];
+              balls[index].delete();
+              delete balls[index];
             }
             else {
 
@@ -238,11 +236,11 @@ $(document).ready(function(){
         }).fail(function() {
 
         }).always(function(){
-          if(balls[idx])
+          if(balls[index])
           {
 
-            balls[idx].hold = false;
-            balls[idx].ball.attr("held", "false");
+            balls[index].hold = false;
+            balls[index].ball.attr("held", "false");
 
 
           }
@@ -253,7 +251,7 @@ $(document).ready(function(){
       }
     });
 
-  }, 17); //A delay of 17ms is about 60 fps
+  }, 16); //A delay of 17ms is about 60 fps
 
 });
 
