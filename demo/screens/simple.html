@@ -134,6 +134,7 @@ $(document).ready(function(){
     this.hold = function(holding)
     {
       ballObj.held = holding;
+      ballObj.immune = holding;
       ballObj.ball.attr("held", holding);
     }
 
@@ -188,10 +189,6 @@ $(document).ready(function(){
   socket.on("newObj", function(data){
     if(name == data.name && channel == data.object.channel)
     {
-      var ts = Date.now();
-      var max = 99999;
-      var min = 10000;
-      var rand = Math.floor(Math.random() * (max - min + 1)) + min;
 
       var id = data.object.info.name;
 
@@ -206,7 +203,7 @@ console.log(balls);
       if(ball.held)
       {
         console.log("holding " + ball.name);
-        return true;
+        //return true;
       }
       ball.move();
       var wall = ball.checkWall();
