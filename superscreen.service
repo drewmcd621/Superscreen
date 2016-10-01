@@ -9,7 +9,7 @@ StandardOutput=syslog               # Output to syslog
 StandardError=syslog                # Output to syslog
 SyslogIdentifier=superscreen
 
-Environment=NODE_ENV=production
+#Environment=NODE_ENV=production
 
 [Install]
 WantedBy=multi-user.target
