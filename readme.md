@@ -4,7 +4,7 @@ Superscreen is a server which co-ordinates the transfer of "particles" between m
 
 This project inspired by the [Exquisite Donut](https://github.com/workergnome/exquisite_donut)
 
-A demo can be found at [superscreen.flyingkiwibird.com](http://superscreen.flyingkiwibird.com/)
+A demo can be found at [superscreen.drewmcdermott.net](http://superscreen.drewmcdermott.net/)
 
 ## API
 
