@@ -71,8 +71,9 @@ $(document).ready(function(){
     .attr("held", false)
     .style("fill",color)
     .style("opacity","0.7");
-    this.move = function(){
-      if(ballObj.hold) return;
+    this.move = function()
+    {
+      if(ballObj.held) return;
       ballObj.x += ballObj.dX;
       ballObj.y += ballObj.dY;
 
@@ -199,13 +200,13 @@ $(document).ready(function(){
   });
 console.log(balls);
   d3.timer(function () {
-    console.log("tick");
     $.each(balls, function (index, ball) {
       if(ball.held)
       {
         console.log("holding " + ball.name);
         //return true;
       }
+
       ball.move();
       var wall = ball.checkWall();
       if(wall)
