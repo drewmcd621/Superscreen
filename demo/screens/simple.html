@@ -55,6 +55,7 @@ $(document).ready(function(){
     this.dY = speedY;
     this.x = posX;
     this.y = posY;
+    this.name = null;
     this.svg = canvass;
     this.hold = false;
     var ballObj = this;
@@ -150,9 +151,15 @@ $(document).ready(function(){
     {
       ballObj.ball.remove();
     }
+
+    this.setName = function(ball_name)
+    {
+      ballObj.ball.attr("ball-name", ball_name);
+      this.name = ball_name;
+    }
   }
 
-  var balls = [];
+  var balls = {};
 
   function scaleX(p)
   {
@@ -166,84 +173,85 @@ $(document).ready(function(){
 
   var maxVel = 5;
   for (var i = 0; i < 1; i++) {
-    balls.push(new Ball(svg, scaleX(Math.random()), scaleY(Math.random()), maxVel*2*Math.random()-maxVel, maxVel*2*Math.random()-maxVel, color));
+    var ball_name = name + "-ball" + i;
+    balls[ball_name] = new Ball(svg, scaleX(Math.random()), scaleY(Math.random()), maxVel*2*Math.random()-maxVel, maxVel*2*Math.random()-maxVel, color);
+    balls[ball_name].setName(ball_name);
   }
 
   socket.on("newObj", function(data){
     if(name == data.name && channel == data.object.channel)
     {
-      var l = balls.push(new Ball(svg, scaleX(data.object.left), scaleY(data.object.top),scaleX(data.object.xspeed), scaleY(data.object.yspeed), data.object.info.color));
-      balls[l-1].immune = true; // Make new balls immune to bouncing
+      var ts = Date.now();
+      var max = 99999;
+      var min = 10000;
+      var rand = Math.floor(Math.random() * (max - min + 1)) + min;
+
+      var id = data.object.info.name;
+
+      balls[id] = new Ball(svg, scaleX(data.object.left), scaleY(data.object.top),scaleX(data.object.xspeed), scaleY(data.object.yspeed), data.object.info.color);
+      balls[id].immune = true; // Make new balls immune to bouncing
     }
   });
 
   d3.timer(function () {
-    for (var i = balls.length -1; i >= 0; --i) {
-      if(! balls[i]) continue;
-      if(balls[i].hold) continue;
-      balls[i].move();
-      var wall = balls[i].checkWall();
+    $.each(balls, function (index, ball) {
+      if(ball.hold) continue;
+      ball.move();
+      var wall = ball.checkWall();
       if(wall)
       {
 
-        var thisBall = balls[i];
-        var idx = i;
+        var idx = index
 
         balls[idx].hold = true;
         balls[idx].ball.attr("held", "true");
 
-        console.debug("Holding ball " + idx + " on " + name);
+
 
         var url = "http://flyingkiwibird.com:8085/api/transmit";
         var data = {};
         data["channel"] = channel;
         data["name"] = name;
         data["to"] = wall;
-        data["left"] = thisBall.x / w;
-        data["top"] = thisBall.y / h;
-        data["xspeed"] = thisBall.dX / w;
-        data["yspeed"] = thisBall.dY / h;
-        data["info"] = {color: thisBall.color};
+        data["left"] = ball.x / w;
+        data["top"] = ball.y / h;
+        data["xspeed"] = ball.dX / w;
+        data["yspeed"] = ball.dY / h;
+        data["info"] = {color: ball.color, name: ball.name};
 
         balls[idx].bounce(wall);
 
         $.getJSON(url, data).done(function(data){
-          console.log(data);
+
           if(data.success)
           {
             if(data.sent)
             {
-              thisBall.delete();
-              balls[idx] = null;  //Ball is on another screen now...
+              balls[idx].delete();
+              delete balls[idx];
             }
             else {
-              console.info("bounce");
+
             }
           }
         }).fail(function() {
-          console.error("URL error");
+
         }).always(function(){
           if(balls[idx])
           {
 
             balls[idx].hold = false;
             balls[idx].ball.attr("held", "false");
-            console.debug("Unheld " + idx + " on " + name);
+
 
           }
           else {
-            console.debug("Ball " + idx + " not found, can't unhold" + " on " + name);
+
           }
         });
       }
-    }
-    //Remove nulls
-    for (var i = balls.length -1; i >= 0; --i) {
-      if(! balls[i])
-      {
-        balls.splice(i, 1);
-      }
-    }
+    });
+
   }, 17); //A delay of 17ms is about 60 fps
 
 });
