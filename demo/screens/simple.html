@@ -173,7 +173,7 @@ $(document).ready(function(){
 
   var maxVel = 5;
   for (var i = 0; i < 1; i++) {
-    var ball_name = name + "-ball" + i;
+    var ball_name = name + "ball" + i;
     balls[ball_name] = new Ball(svg, scaleX(Math.random()), scaleY(Math.random()), maxVel*2*Math.random()-maxVel, maxVel*2*Math.random()-maxVel, color);
     balls[ball_name].setName(ball_name);
   }
@@ -190,6 +190,7 @@ $(document).ready(function(){
 
       balls[id] = new Ball(svg, scaleX(data.object.left), scaleY(data.object.top),scaleX(data.object.xspeed), scaleY(data.object.yspeed), data.object.info.color);
       balls[id].immune = true; // Make new balls immune to bouncing
+      balls[id].setName(ball_name);
     }
   });
 
