@@ -57,7 +57,7 @@ $(document).ready(function(){
     this.y = posY;
     this.name = null;
     this.svg = canvass;
-    this.hold = false;
+    this.held = false;
     var ballObj = this;
     this.rad = 10;
     this.immune = false;
@@ -68,6 +68,7 @@ $(document).ready(function(){
     .attr("cx", ballObj.x)
     .attr("cy", ballObj.y)
     .attr("name", name)
+    .attr("held", false)
     .style("fill",color)
     .style("opacity","0.7");
     this.move = function(){
@@ -128,6 +129,12 @@ $(document).ready(function(){
       return dir;
 
 
+    }
+
+    this.hold = function(holding)
+    {
+      ballObj.held = holding;
+      ballObj.ball.attr("held", holding);
     }
 
     this.bounce = function(wall)
@@ -196,7 +203,7 @@ $(document).ready(function(){
 
   d3.timer(function () {
     $.each(balls, function (index, ball) {
-      if(ball.hold)
+      if(ball.held)
       {
         console.log("holding " + ball.name);
         return true;
@@ -205,11 +212,7 @@ $(document).ready(function(){
       var wall = ball.checkWall();
       if(wall)
       {
-
-        balls[index].hold = true;
-        balls[index].ball.attr("held", "true");
-
-
+        ball.hold(true);
 
         var url = "http://flyingkiwibird.com:8085/api/transmit";
         var data = {};
@@ -222,7 +225,7 @@ $(document).ready(function(){
         data["yspeed"] = ball.dY / h;
         data["info"] = {color: ball.color, name: ball.name};
 
-        balls[index].bounce(wall);
+        ball.bounce(wall);
 
         $.getJSON(url, data).done(function(data){
 
@@ -230,7 +233,7 @@ $(document).ready(function(){
           {
             if(data.sent)
             {
-              balls[index].delete();
+              ball.delete();
               delete balls[index];
             }
             else {
@@ -240,17 +243,9 @@ $(document).ready(function(){
         }).fail(function() {
 
         }).always(function(){
-          if(balls[index])
-          {
 
-            balls[index].hold = false;
-            balls[index].ball.attr("held", "false");
+          ball.hold(false);
 
-
-          }
-          else {
-
-          }
         });
       }
     });
