@@ -61,7 +61,7 @@ $(document).ready(function(){
     var ballObj = this;
     this.rad = 10;
     this.immune = false;
-    this.immuneDir = false;
+    this.immuneDir = null;
     this.color = color;
 
     this.ball = canvass.append('circle')
@@ -120,6 +120,16 @@ $(document).ready(function(){
         if(dir)
         {
           ballObj.bounce(dir); //Make sure it it going in the right direction even if immune
+          if(ballObj.immuneDir)
+          {
+            if(dir != ballObj.immuneDir)
+            {
+              //Not immune in this direction
+              ballObj.immune = false;
+              return dir;
+            }
+          }
+
           return null;
         }
         else {
@@ -196,6 +206,7 @@ $(document).ready(function(){
 
       balls[id] = new Ball(svg, scaleX(data.object.left), scaleY(data.object.top),scaleX(data.object.xspeed), scaleY(data.object.yspeed), data.object.info.color);
       balls[id].immune = true; // Make new balls immune to bouncing
+      balls[id].immuneDir = data.object.from;
       balls[id].setName(id);
     }
   });
