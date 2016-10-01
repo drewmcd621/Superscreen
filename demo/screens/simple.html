@@ -113,7 +113,7 @@ $(document).ready(function(){
 
         dir = "R";
       }
-
+/*
       if(ballObj.immune)
       {
         if(dir)
@@ -126,7 +126,7 @@ $(document).ready(function(){
           return null;
         }
       }
-
+*/
       return dir;
 
 
@@ -181,7 +181,7 @@ $(document).ready(function(){
   }
 
   var maxVel = 5;
-  for (var i = 0; i < 1; i++) {
+  for (var i = 0; i < 2; i++) {
     var ball_name = name + "ball" + i;
     balls[ball_name] = new Ball(svg, scaleX(Math.random()), scaleY(Math.random()), maxVel*2*Math.random()-maxVel, maxVel*2*Math.random()-maxVel, color);
     balls[ball_name].setName(ball_name);
