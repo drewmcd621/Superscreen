@@ -200,7 +200,7 @@ $(document).ready(function(){
       balls[id].setName(ball_name);
     }
   });
-
+console.log(balls);
   d3.timer(function () {
     $.each(balls, function (index, ball) {
       if(ball.held)
