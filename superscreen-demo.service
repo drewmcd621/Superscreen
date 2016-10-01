@@ -1,27 +1,15 @@
 [Unit]
-Description=Superscreen Demo
+Description=Node Superscreen Demo
 
 [Service]
-Type=simple
-ExecStart=/usr/bin/node /var/http/superscreen/demo/demo.js
-WorkingDirectory=/var/http/superscreen/demo
-
-User=nobody
-Group=nogroup
-
-# Environment variables:
-Environment=NODE_ENV=production
-
-# Allow many incoming connections
-LimitNOFILE=infinity
-
-# Allow core dumps for debugging
-LimitCORE=infinity
-
-StandardInput=null
-StandardOutput=syslog
-StandardError=syslog
+ExecStart=/usr/bin/node /var/http/superscreen/deom/demo.js
 Restart=always
+RestartSec=10                       # Restart service after 10 seconds if node service crashes
+StandardOutput=syslog               # Output to syslog
+StandardError=syslog                # Output to syslog
+SyslogIdentifier=superscreen-demo
+
+Environment=NODE_ENV=production
 
 [Install]
 WantedBy=multi-user.target
