@@ -195,7 +195,7 @@ $(document).ready(function(){
 
   d3.timer(function () {
     $.each(balls, function (index, ball) {
-      if(ball.hold) continue;
+      if(ball.hold) return true;
       ball.move();
       var wall = ball.checkWall();
       if(wall)
